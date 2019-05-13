@@ -41,7 +41,6 @@ public class Model {
         }
         return current;
     }
-
     /**
      * Method to change the deleted field features.
      * @param player who wants to delete

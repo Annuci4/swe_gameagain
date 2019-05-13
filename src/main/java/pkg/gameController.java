@@ -10,8 +10,8 @@ public class gameController {
     public playerModel player1 = new playerModel(true, true, false, true, false);
     public playerModel player2 = new playerModel(false, false, false, false, true);
 
-    public Boolean win = false;
     table table = new table();
+    String helper;
 
     public void startGame() {
         Scanner scan = new Scanner(System.in);
@@ -19,18 +19,39 @@ public class gameController {
         player2.blackKing = true;
         table.createTable();
         View.print(table);
-
         int row;
         int col;
         int del_x;
         int del_y;
         while (!player1.win && !player2.win) {
             System.out.println("Kérlek add meg az X és Y koordinátákat.");
-            while(true) {
-                System.out.print("X: ");
-                row = scan.nextInt();
-                System.out.print("Y: ");
-                col = scan.nextInt();
+
+                while (true) {
+                    System.out.print("X: ");
+                    helper = scan.next();
+                    if (Test.alphabetTest(helper))
+                        System.out.println("A-a...Ez nem lesz jó!\"");
+                    if (!Test.alphabetTest(helper)) {
+                        row = Integer.parseInt(helper);
+                        if (row < 0 || row > 5)
+                            System.out.println("A-a...Ez nem lesz jó!\"");
+                        else
+                            break;
+                    }
+                }
+                while (true) {
+                    System.out.print("Y: ");
+                    helper = scan.next();
+                    if (Test.alphabetTest(helper))
+                        System.out.println("A-a...Ez nem lesz jó!\"");
+                    if (!Test.alphabetTest(helper)) {
+                        col = Integer.parseInt(helper);
+                        if (col < 0 || col > 7)
+                            System.out.println("A-a...Ez nem lesz jó!\"");
+                        else
+                            break;
+                    }
+                }
                 if (player1.turn) {
                     // System.out.println("first player_white");
                     if (Test.preTest(row, col, table, player1)) {
@@ -44,7 +65,6 @@ public class gameController {
                         player1.turn = true;
                         player2.turn = false;
                     }
-
                 } else if (player2.turn) {
                     // System.out.println("second player_black");
                     if (Test.preTest(row, col, table, player2)) {
@@ -59,14 +79,34 @@ public class gameController {
                         player2.turn = true;
                     }
                 }
-            }
             System.out.println("Kérlek add meg a törlendő mező koordinátáit");
             while(true) {
-                System.out.print("Delete x: ");
-                del_x = scan.nextInt();
-                System.out.print("Delete y: ");
-                del_y = scan.nextInt();
-
+                while(true) {
+                    System.out.print("Delete x: ");
+                    helper = scan.next();
+                    if (Test.alphabetTest(helper))
+                        System.out.println("A-a...Ez nem lesz jó!\"");
+                    if (!Test.alphabetTest(helper)) {
+                        del_x = Integer.parseInt(helper);
+                        if (col < 0 || col > 7)
+                            System.out.println("A-a...Ez nem lesz jó!\"");
+                        else
+                            break;
+                    }
+                }
+                while(true) {
+                    System.out.print("Delete y: ");
+                    helper = scan.next();
+                    if (Test.alphabetTest(helper))
+                        System.out.println("A-a...Ez nem lesz jó!");
+                    if (!Test.alphabetTest(helper)) {
+                        del_y = Integer.parseInt(helper);
+                        if (col < 0 || col > 7)
+                            System.out.println("A-a...Ez nem lesz jó!\"");
+                        else
+                            break;
+                    }
+                }
                 if (player1.delete_turn) {
                     if (Test.deleteTest(del_x, del_y, table)) {
                         Model.doSomeDelete(player1, table, del_x, del_y);
@@ -94,7 +134,7 @@ public class gameController {
                     }
                 }
             }
-             int db=0;
+            int db=0;
            if(row>0 && row<5 && col>0 && col<7) {
                for (int i = row - 1; i < row + 1; i++) {
                    for (int j = col - 1; j < col + 1; j++) {
@@ -165,7 +205,6 @@ public class gameController {
                     System.out.println("Player2 won!");
                 }
             }
-
         }
     }
 }

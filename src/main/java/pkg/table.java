@@ -4,14 +4,15 @@ public class table {
 
     static state[][] table = new state[6][8];
 
-
+    /**
+     * Create the starter table.
+     */
     public static void createTable() {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 8; j++) {
                 table[i][j] = new state();
             }
         }
-
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 8; j++) {
                 table[i][j].empty = true;

@@ -1,7 +1,7 @@
 package pkg;
 
 /**
- * possible states for fields.
+ * Possible states for fields.
  * {@code Status} the marker character
  */
 public class state {
