@@ -1,7 +1,10 @@
-package pkg;
+package pkg.game;
 
 import static java.lang.Math.abs;
 
+/**
+ * tests.
+ */
 public class Test {
     /**
      * Test for check the current move is valid or not.

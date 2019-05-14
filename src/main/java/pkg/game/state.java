@@ -1,4 +1,4 @@
-package pkg;
+package pkg.game;
 
 /**
  * Possible states for fields.

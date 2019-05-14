@@ -1,9 +1,9 @@
-package pkg;
+package pkg.game;
+
 
 public class table {
 
     static state[][] table = new state[6][8];
-
     /**
      * Create the starter table.
      */

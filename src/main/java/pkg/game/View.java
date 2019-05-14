@@ -1,6 +1,9 @@
 
-package pkg;
+package pkg.game;
 
+/**
+ * the view.
+ */
 public class View {
 
     /**

@@ -1,8 +1,11 @@
 package pkg.results;
 
+import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
-
 import java.util.List;
+import util.jpa.GenericJpaDao;
+
+import javax.persistence.EntityManager;
 
 public class GameResultDao extends GenericJpaDao<GameResult> {
 
@@ -10,19 +13,16 @@ public class GameResultDao extends GenericJpaDao<GameResult> {
         super(GameResult.class);
     }
 
-    /**
-     * Returns the list of {@code n} best results with respect to the time
-     * spent for solving the puzzle.
-     *
-     * @param n the maximum number of results to be returned
-     * @return the list of {@code n} best results with respect to the time
-     * spent for solving the puzzle
-     */
     @Transactional
-    public List<GameResult> findBest(int n) {
-        return entityManager.createQuery("SELECT r FROM GameResult r WHERE r.solved = true ORDER BY r.duration ASC, r.created DESC", GameResult.class)
-                .setMaxResults(n)
-                .getResultList();
+    public GameResult createPlayer(String name, int numberOfWons){
+        GameResult plyr = new GameResult();
+        plyr.setPlayername(name);
+        plyr.setNumberOfVictories(numberOfWons);
+        return plyr;
+    }
+    @Transactional
+    public List<GameResult> findTop5(int n) {
+        return entityManager.createQuery("SELECT r FROM GameResult r ORDER BY r.numberOfVictories ASC", GameResult.class).getResultList();
     }
 
 }

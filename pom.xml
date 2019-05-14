@@ -15,7 +15,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <exec.cleanupDaemonThreads>false</exec.cleanupDaemonThreads>
         <dependency.locations.enabled>false</dependency.locations.enabled>
-        <exec.mainClass>kindeslend.pkg.main</exec.mainClass>
+        <exec.mainClass>pkg.game.main</exec.mainClass>
     </properties>
     <developers>
         <developer>
@@ -24,7 +24,10 @@
             <id>GW827N</id>
         </developer>
     </developers>
-    <scm/>
+    <scm>
+        <connection></connection>
+        <tag>release-tag</tag>
+    </scm>
     <description>A jatekok.pdf-ből a 2.23-as játékot készítettem el.
         Minden körben lép egy játékos majd levesz egy mezőt.
         Addig folytatódik a játék amíg valaki lépésképtelen pózícióba nem kerül.
@@ -36,6 +39,7 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.26</version>
             <scope>compile</scope>
+
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -105,11 +109,26 @@
         </dependency>
     </dependencies>
     <build>
+        <pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.7.1</version>
+            </plugin>
+        </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <artifactId>maven-site-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-descriptor</id>
+                        <goals>
+                            <goal>attach-descriptor</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.projectlombok</groupId>

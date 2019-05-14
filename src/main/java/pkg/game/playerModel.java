@@ -1,4 +1,4 @@
-package pkg;
+package pkg.game;
 
 public class playerModel {
 
@@ -9,6 +9,7 @@ public class playerModel {
     boolean delete_turn;
 
     /**
+     * Contains the players attributes.
      * @param b  true, if the actual player has the turn
      * @param b0 true, if the actual player has the delete turn
      * @param b1 true, if the actual player win
@@ -22,4 +23,5 @@ public class playerModel {
         this.whiteKing = b2;
         this.blackKing = b3;
     }
+
 }

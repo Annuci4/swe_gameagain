@@ -1,4 +1,4 @@
-package pkg;
+package pkg.game;
 
 public class Model {
     /** Method to change the kings positions.
@@ -10,7 +10,6 @@ public class Model {
      */
     public static table doSomeMagic(playerModel player, table current, int whereX, int whereY){
         int row=10,col=10;
-
         if(player.whiteKing){
 
             for (int i = 0; i < 6; i++) {
@@ -50,7 +49,6 @@ public class Model {
      * @return returns the updated {@code current} board after the delete
      */
     public static table doSomeDelete(playerModel player, table current, int whereDel_x, int whereDel_Y){
-
         if(player.whiteKing){
 
             current.table[whereDel_x][whereDel_Y].kingWhite=false;

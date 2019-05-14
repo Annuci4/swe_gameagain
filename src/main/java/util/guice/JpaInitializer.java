@@ -6,9 +6,6 @@ import javax.inject.Singleton;
 
 import com.google.inject.persist.PersistService;
 
-/**
- * idk
- */
 @Singleton
 public class JpaInitializer {
 
@@ -16,5 +13,4 @@ public class JpaInitializer {
     public JpaInitializer (PersistService persistService) {
         persistService.start();
     }
-
 }
