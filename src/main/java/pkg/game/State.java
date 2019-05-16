@@ -4,7 +4,7 @@ package pkg.game;
  * Possible states for fields.
  * {@code Status} the marker character
  */
-public class state {
+public class State {
 
  public boolean empty = false;
  public boolean kingWhite = false;

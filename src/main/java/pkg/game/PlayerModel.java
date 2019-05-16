@@ -1,6 +1,6 @@
 package pkg.game;
 
-public class playerModel {
+public class PlayerModel {
 
     boolean turn;
     boolean win;
@@ -17,7 +17,7 @@ public class playerModel {
      * @param b2 {@code true}, if the actual player has the white king
      * @param b3 {@code true}, if the actual player has the black king
      */
-    public playerModel(boolean b, boolean b0, boolean b1, boolean b2, boolean b3) {
+    public PlayerModel(boolean b, boolean b0, boolean b1, boolean b2, boolean b3) {
         this.turn = b;
         this.delete_turn =b0;
         this.win = b1;

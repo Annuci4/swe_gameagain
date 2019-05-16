@@ -1,5 +1,5 @@
 package pkg.game;
 
 /**
- *There is everything in this package.
+ * The game most important parts.
  */

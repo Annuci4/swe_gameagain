@@ -7,11 +7,11 @@ package pkg.game;
 public class View {
 
     /**
-     * examine the status of the field in the current table and
-     * associate them with letters based on them and draw the table.
-     * @param current the {@code current} table to update
+     * examine the status of the field in the current Table and
+     * associate them with letters based on them and draw the Table.
+     * @param current the {@code current} Table to update
      */
-    public static void print(table current){
+    public static void print(Table current){
 
         for(int i = 0; i < 6; i++){
             for (int j = 0; j < 8; j++){

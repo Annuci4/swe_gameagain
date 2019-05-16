@@ -2,30 +2,26 @@ package pkg.game;
 
 import java.util.*;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pkg.results.GameResult;
-import pkg.results.GameResultDao;
-import util.guice.PersistenceModule;
 
 /**
  * GameLogic.
  */
-public class gameController {
+public class GameController {
 
-    private static Logger logger = LoggerFactory.getLogger(gameController.class);
+    private static Logger logger = LoggerFactory.getLogger(GameController.class);
 
-    public playerModel player1 = new playerModel(true, true, false, true, false);
-    public playerModel player2 = new playerModel(false, false, false, false, true);
+    public PlayerModel player1 = new PlayerModel(true, true, false, true, false);
+    public PlayerModel player2 = new PlayerModel(false, false, false, false, true);
 
-    table table = new table();
+    Table table = new Table();
     String helper;
     
     public void startGame() {
-        Injector injector = Guice.createInjector(new PersistenceModule("result"));
-        GameResultDao creator = injector.getInstance(GameResultDao.class);
+        //Injector injector = Guice.createInjector(new PersistenceModule("result"));
+        //GameResultDao creator = injector.getInstance(GameResultDao.class);
 
         Scanner scan = new Scanner(System.in);
         player1.whiteKing = true;
@@ -33,11 +29,9 @@ public class gameController {
         System.out.println("A fehér király neve: ");
         String player1_name=scan.nextLine();
         player1.name=player1_name;
-        System.out.println("A fehér király neve: ");
+        System.out.println("A fekete király neve: ");
         String player2_name=scan.nextLine();
         player2.name=player2_name;
-        //player plyr1=creator.createPlayer(player1_name,0);
-        //player plyr2=creator.createPlayer(player2_name,0);
 
         table.createTable();
         View.print(table);
@@ -48,6 +42,7 @@ public class gameController {
         System.out.println("A játékot "+player1_name+" kezdi!");
 
         while (!player1.win && !player2.win) {
+
             System.out.println("Kérlek add meg az X és Y koordinátákat.");
             while(true) {
                 while (true) {
@@ -111,7 +106,8 @@ public class gameController {
                 }
             }
             System.out.println("Kérlek add meg a törlendő mező koordinátáit");
-            while(true) {
+            while(true)
+            {
                 while(true) {
                     System.out.print("Delete x: ");
                     helper = scan.next();
@@ -120,7 +116,7 @@ public class gameController {
                      logger.error("Invalid character.");}
                     if (!Test.AlphabetTest(helper)) {
                         del_x = Integer.parseInt(helper);
-                        if (col < 0 || col > 7) {
+                        if (del_x < 0 || del_x > 7) {
                             System.out.println("A-a...Ez nem lesz jó!\"");
                              logger.error("Invalid number.");
                         } else {
@@ -136,7 +132,7 @@ public class gameController {
                         logger.error("Invalid character.");}
                     if (!Test.AlphabetTest(helper)) {
                         del_y = Integer.parseInt(helper);
-                        if (col < 0 || col > 7) {
+                        if (del_y < 0 || del_y > 7) {
                             System.out.println("A-a...Ez nem lesz jó!\"");
                             logger.error("Invalid number.");
                         } else {
@@ -172,68 +168,7 @@ public class gameController {
                     }
                 }
             }
-            int db=0;
-            if(row>0 && row<5 && col>0 && col<7) {
-                for (int i = row - 1; i < row + 1; i++) {
-                    for (int j = col - 1; j < col + 1; j++) {
-                        if (table.table[i][j].empty)
-                            db++;
-                    }
-                }
-            }
-            if (row==0 && col>0 && col<7){
-                for (int i = row; i < row + 1; i++) {
-                    for (int j = col - 1; j < col + 1; j++) {
-                        if (table.table[i][j].empty)
-                            db++;
-                    }
-                }
-            }
-            if (row==7 && col>0 && col<7){
-                for (int i = row-1; i < row; i++) {
-                    for (int j = col - 1; j < col + 1; j++) {
-                        if (table.table[i][j].empty)
-                            db++;
-                    }
-                }
-            }
-            if (col==0 && row>0 && row<5){
-                for (int i = row-1; i < row + 1; i++) {
-                    for (int j = col; j < col + 1; j++) {
-                        if (table.table[i][j].empty)
-                            db++;
-                    }
-                }
-            }
-            if (col==7 && row>0 && row<5){
-                for (int i = row-1; i < row + 1; i++) {
-                    for (int j = col-1; j < col; j++) {
-                        if (table.table[i][j].empty)
-                            db++;
-                    }
-                }
-            }
-            if(col==0 && row==0){
-                if(table.table[1][1].empty){db++;}
-                if(table.table[1][0].empty){db++;}
-                if(table.table[0][1].empty){db++;}
-            }
-            if(col==0 && row==5){
-                if(table.table[row-1][col+1].empty){db++;}
-                if(table.table[row-1][col].empty){db++;}
-                if(table.table[row][col+1].empty){db++;}
-            }
-            if(col==7 && row==0){
-                if(table.table[row+1][col-1].empty){db++;}
-                if(table.table[row+1][col].empty){db++;}
-                if(table.table[row][col-1].empty){db++;}
-            }
-            if(col==7 && row==5){
-                if(table.table[row-1][col-1].empty){db++;}
-                if(table.table[row-1][col].empty){db++;}
-                if(table.table[row][col-1].empty){db++;}
-            }
-            if(db==0) {
+            if (Test.WinTest(row,col,table)) {
                 if (player1.delete_turn) {
                     player2.win = true;
                     System.out.println("Gratulálok " + player2_name + "!");
@@ -244,17 +179,20 @@ public class gameController {
                     System.out.println("Gratulálok " + player1_name + "!");
                     logger.info("Player2 won!");
                 }
+            }
 
             }
+                /*
                 GameResult gs;
                 gs = createGameResult();
                 creator.persist(gs);
 
-
+            for (GameResult gr : creator.findBest(5)) {
+                System.out.println(gr.getName()+" " + "\t"+ gr.getCreated());
+            }
+            */
         }
 
-
-    }
     private GameResult createGameResult(){
         return GameResult.builder()
                 .name(player1.name)

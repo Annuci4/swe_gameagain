@@ -21,15 +21,18 @@ public class GameResult {
     private String id;
 
     /**
-     * Name of the player.
+     * Name of player1.
      */
     @Column(nullable = false)
     private String name;
 
+    /**
+     * Name of player2.
+     */
     @Column(nullable = false)
     private String name2;
 
-    /**
+     /**
      * Number of how many times won the player.
      */
    // private int numberOfwons1, numberOfwons2;
@@ -47,5 +50,10 @@ public class GameResult {
     public String getName() {
         return name;
     }
+
+    public ZonedDateTime getCreated() {
+        return created;
+    }
+
 
 }

@@ -8,7 +8,7 @@ public class Model {
      * @param whereY the second new coordinate of the king
      * @return returns the updated {@code current} board after the change
      */
-    public static table doSomeMagic(playerModel player, table current, int whereX, int whereY){
+    public static Table doSomeMagic(PlayerModel player, Table current, int whereX, int whereY){
         int row=10,col=10;
         if(player.whiteKing){
 
@@ -48,7 +48,7 @@ public class Model {
      * @param whereDel_Y second coordinate of the deleted field
      * @return returns the updated {@code current} board after the delete
      */
-    public static table doSomeDelete(playerModel player, table current, int whereDel_x, int whereDel_Y){
+    public static Table doSomeDelete(PlayerModel player, Table current, int whereDel_x, int whereDel_Y){
         if(player.whiteKing){
 
             current.table[whereDel_x][whereDel_Y].kingWhite=false;

@@ -15,7 +15,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <exec.cleanupDaemonThreads>false</exec.cleanupDaemonThreads>
         <dependency.locations.enabled>false</dependency.locations.enabled>
-        <exec.mainClass>pkg.game.main</exec.mainClass>
+        <exec.mainClass>pkg.game.Main</exec.mainClass>
     </properties>
     <developers>
         <developer>
@@ -24,9 +24,6 @@
             <id>GW827N</id>
         </developer>
     </developers>
-    <scm>
-        <connection></connection>
-    </scm>
     <description>A jatekok.pdf-ből a 2.23-as játékot készítettem el.
         Minden körben lép egy játékos majd levesz egy mezőt.
         Addig folytatódik a játék amíg valaki lépésképtelen pózícióba nem kerül.
