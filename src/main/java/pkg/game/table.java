@@ -3,7 +3,7 @@ package pkg.game;
 
 public class table {
 
-    static state[][] table = new state[6][8];
+    public static state[][] table = new state[6][8];
     /**
      * Create the starter table.
      */

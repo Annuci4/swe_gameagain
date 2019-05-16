@@ -6,49 +6,46 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
+@Table
 public class GameResult {
+
+    @Id
+    @GeneratedValue
+    private String id;
 
     /**
      * Name of the player.
      */
     @Column(nullable = false)
-    private String playername;
+    private String name;
 
-    public void setPlayername(String player) {
-        this.playername = player;
-    }
-
-    public void setNumberOfVictories(int numberOfVictories) {
-        this.numberOfVictories = numberOfVictories;
-    }
-
-    public int getNumberOfVictories() {
-        return numberOfVictories;
-    }
-
-    public String getPlayername() {
-        return playername;
-    }
+    @Column(nullable = false)
+    private String name2;
 
     /**
      * Number of how many times won the player.
      */
-    private int numberOfVictories;
+   // private int numberOfwons1, numberOfwons2;
+    /**
+     * The timestamp when the game was ended.
+     */
+    @Column(nullable = false)
+    private ZonedDateTime created;
 
-    @Id
-    private String id;
-
-    public String getId() {
-        return id;
+    @PrePersist
+    protected void onPersist() {
+        created = ZonedDateTime.now();
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getName() {
+        return name;
     }
+
 }

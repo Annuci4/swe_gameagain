@@ -13,16 +13,9 @@ public class GameResultDao extends GenericJpaDao<GameResult> {
         super(GameResult.class);
     }
 
-    @Transactional
-    public GameResult createPlayer(String name, int numberOfWons){
-        GameResult plyr = new GameResult();
-        plyr.setPlayername(name);
-        plyr.setNumberOfVictories(numberOfWons);
-        return plyr;
+    public List<GameResult> findBest(int n) {
+        return entityManager.createQuery("SELECT r FROM GameResult r  ORDER BY r.name ASC", GameResult.class)
+                .setMaxResults(n)
+                .getResultList();
     }
-    @Transactional
-    public List<GameResult> findTop5(int n) {
-        return entityManager.createQuery("SELECT r FROM GameResult r ORDER BY r.numberOfVictories ASC", GameResult.class).getResultList();
-    }
-
 }

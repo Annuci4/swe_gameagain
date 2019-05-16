@@ -26,7 +26,6 @@
     </developers>
     <scm>
         <connection></connection>
-        <tag>release-tag</tag>
     </scm>
     <description>A jatekok.pdf-ből a 2.23-as játékot készítettem el.
         Minden körben lép egy játékos majd levesz egy mezőt.
@@ -39,7 +38,6 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.26</version>
             <scope>compile</scope>
-
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -107,28 +105,30 @@
             <version>1.4.199</version>
             <scope>runtime</scope>
         </dependency>
+        <!-- <dependency>
+             <groupId>org.jetbrains</groupId>
+             <artifactId>annotations</artifactId>
+             <version>17.0.0</version>
+             <scope>compile</scope>
+         </dependency>
+         <dependency>
+             <groupId>org.junit.jupiter</groupId>
+             <artifactId>junit-jupiter-api</artifactId>
+             <version>RELEASE</version>
+             <scope>test</scope>
+         </dependency>
+         <dependency>
+             <groupId>org.sonatype.sisu</groupId>
+             <artifactId>sisu-inject-bean</artifactId>
+             <version>1.4.2</version>
+         </dependency> -->
     </dependencies>
     <build>
-        <pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.7.1</version>
-            </plugin>
-        </plugins>
-        </pluginManagement>
-        <plugins>
-            <plugin>
-                <artifactId>maven-site-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-descriptor</id>
-                        <goals>
-                            <goal>attach-descriptor</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.projectlombok</groupId>
@@ -168,7 +168,9 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>${exec.mainClass}</mainClass>
+                                    <manifestEntries>
+                                        <Main-Class>${exec.mainClass}</Main-Class>
+                                    </manifestEntries>
                                 </transformer>
                             </transformers>
                         </configuration>
@@ -222,6 +224,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.1.0</version>
+                <configuration>
+                    <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -253,4 +258,8 @@
             </plugin>
         </plugins>
     </reporting>
+
+
+
+
 </project>

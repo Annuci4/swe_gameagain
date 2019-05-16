@@ -6,10 +6,10 @@ package pkg.game;
  */
 public class state {
 
- boolean empty = false;
- boolean kingWhite = false;
- boolean kingBlack = false;
- boolean deleted = false;
+ public boolean empty = false;
+ public boolean kingWhite = false;
+ public boolean kingBlack = false;
+ public boolean deleted = false;
  String Status;
 
 }
