@@ -2,9 +2,13 @@ package pkg.game;
 
 import java.util.*;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pkg.results.GameResult;
+import pkg.results.GameResultDao;
+import util.guice.PersistenceModule;
 
 /**
  * GameLogic.
@@ -13,16 +17,15 @@ public class GameController {
 
     private static Logger logger = LoggerFactory.getLogger(GameController.class);
 
-    public PlayerModel player1 = new PlayerModel(true, true, false, true, false);
-    public PlayerModel player2 = new PlayerModel(false, false, false, false, true);
+    public PlayerModel player1 = new PlayerModel(true, true, false, true, false, 2,0);
+    public PlayerModel player2 = new PlayerModel(false, false, false, false, true,3,7);
 
     Table table = new Table();
     String helper;
     
     public void startGame() {
-        //Injector injector = Guice.createInjector(new PersistenceModule("result"));
-        //GameResultDao creator = injector.getInstance(GameResultDao.class);
-
+        Injector injector = Guice.createInjector(new PersistenceModule("result"));
+        GameResultDao creator = injector.getInstance(GameResultDao.class);
         Scanner scan = new Scanner(System.in);
         player1.whiteKing = true;
         player2.blackKing = true;
@@ -43,16 +46,25 @@ public class GameController {
 
         while (!player1.win && !player2.win) {
 
+            if (player1.turn) {
+                System.out.println("Az fehér király lép!");
+            }else{
+                System.out.println("A fekete király lép!");
+            }
             System.out.println("Kérlek add meg az X és Y koordinátákat.");
             while(true) {
                 while (true) {
                     System.out.print("X: ");
                     helper = scan.next();
-                    if (Test.AlphabetTest(helper)){
+                    if (Test.alphabetCheck(helper)){
                         System.out.println("A-a...Ez nem lesz jó!\"");
                     logger.error("Invalid character");}
-                    if (!Test.AlphabetTest(helper)) {
+                    if (!Test.alphabetCheck(helper)) {
                         row = Integer.parseInt(helper);
+                        if(player1.turn)
+                            player1.second=row;
+                        else
+                            player2.second=row;
                         if (row < 0 || row > 5) {
                             System.out.println("A-a...Ez nem lesz jó!\"");
                             logger.error("Invalid number");
@@ -64,11 +76,15 @@ public class GameController {
                 while (true) {
                     System.out.print("Y: ");
                     helper = scan.next();
-                    if (Test.AlphabetTest(helper)){
+                    if (Test.alphabetCheck(helper)){
                         System.out.println("A-a...Ez nem lesz jó!\"");
                     logger.error("Invalid character");}
-                    if (!Test.AlphabetTest(helper)) {
+                    if (!Test.alphabetCheck(helper)) {
                         col = Integer.parseInt(helper);
+                        if(player1.turn)
+                            player1.second=col;
+                        else
+                            player2.second=col;
                         if (col < 0 || col > 7) {
                             System.out.println("A-a...Ez nem lesz jó!\"");
                             logger.error("Invalid number");
@@ -78,8 +94,8 @@ public class GameController {
                     }
                 }
                 if (player1.turn) {
-                    if (Test.PreTest(row, col, table, player1)) {
-                        Model.doSomeMagic(player1, table, row, col);
+                    if (Test.preCheck(row, col, table, player1)) {
+                        Model.positionChange(player1, table, row, col);
                         player1.turn = false;
                         player2.turn = true;
                         View.print(table);
@@ -91,8 +107,8 @@ public class GameController {
                         player2.turn = false;
                     }
                 } else if (player2.turn) {
-                    if (Test.PreTest(row, col, table, player2)) {
-                        Model.doSomeMagic(player2, table, row, col);
+                    if (Test.preCheck(row, col, table, player2)) {
+                        Model.positionChange(player2, table, row, col);
                         player1.turn = true;
                         player2.turn = false;
                         View.print(table);
@@ -111,10 +127,10 @@ public class GameController {
                 while(true) {
                     System.out.print("Delete x: ");
                     helper = scan.next();
-                    if (Test.AlphabetTest(helper)){
+                    if (Test.alphabetCheck(helper)){
                         System.out.println("A-a...Ez nem lesz jó!\"");
                      logger.error("Invalid character.");}
-                    if (!Test.AlphabetTest(helper)) {
+                    if (!Test.alphabetCheck(helper)) {
                         del_x = Integer.parseInt(helper);
                         if (del_x < 0 || del_x > 7) {
                             System.out.println("A-a...Ez nem lesz jó!\"");
@@ -127,10 +143,10 @@ public class GameController {
                 while(true) {
                     System.out.print("Delete y: ");
                     helper = scan.next();
-                    if (Test.AlphabetTest(helper)){
+                    if (Test.alphabetCheck(helper)){
                         System.out.println("A-a...Ez nem lesz jó!");
                         logger.error("Invalid character.");}
-                    if (!Test.AlphabetTest(helper)) {
+                    if (!Test.alphabetCheck(helper)) {
                         del_y = Integer.parseInt(helper);
                         if (del_y < 0 || del_y > 7) {
                             System.out.println("A-a...Ez nem lesz jó!\"");
@@ -141,8 +157,8 @@ public class GameController {
                     }
                 }
                 if (player1.delete_turn) {
-                    if (Test.DeleteTest(del_x, del_y, table)) {
-                        Model.doSomeDelete(player1, table, del_x, del_y);
+                    if (Test.deleteCheck(del_x, del_y, table)) {
+                        Model.deleteField(player1, table, del_x, del_y);
                         player1.delete_turn = false;
                         player2.delete_turn = true;
                         View.print(table);
@@ -154,8 +170,8 @@ public class GameController {
                         player2.delete_turn = false;
                     }
                 } else if (player2.delete_turn) {
-                    if (Test.DeleteTest(del_x, del_y, table)) {
-                        Model.doSomeDelete(player1, table, del_x, del_y);
+                    if (Test.deleteCheck(del_x, del_y, table)) {
+                        Model.deleteField(player1, table, del_x, del_y);
                         player1.delete_turn = true;
                         player2.delete_turn = false;
                         View.print(table);
@@ -168,29 +184,27 @@ public class GameController {
                     }
                 }
             }
-            if (Test.WinTest(row,col,table)) {
-                if (player1.delete_turn) {
+            if (Test.winCheck(player1.first,player1.second,table)) {
                     player2.win = true;
                     System.out.println("Gratulálok " + player2_name + "!");
                     logger.info("Player1 won!");
-                }
-                if (player2.delete_turn) {
+            }
+            if (Test.winCheck(player2.first,player2.second,table)) {
                     player1.win = true;
                     System.out.println("Gratulálok " + player1_name + "!");
                     logger.info("Player2 won!");
-                }
             }
 
             }
-                /*
+
                 GameResult gs;
-                gs = createGameResult();
-                creator.persist(gs);
+               gs = createGameResult();
+               creator.persist(gs);
 
             for (GameResult gr : creator.findBest(5)) {
-                System.out.println(gr.getName()+" " + "\t"+ gr.getCreated());
+         System.out.println(gr.getName()+" " + "\t"+ gr.getCreated());
             }
-            */
+
         }
 
     private GameResult createGameResult(){

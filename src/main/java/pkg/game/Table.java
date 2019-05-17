@@ -35,32 +35,6 @@ public class Table {
                 table[i][j].empty = true;
             }
         }
-
-
-    }
-
-    public void createtable2() {
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 8; j++) {
-                table[i][j] = new State();
-            }
-        }
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 8; j++) {
-                table[i][j].empty = true;
-            }
-        }
-        table[1][5].empty=false;
-        table[1][5].kingWhite=true;
-        table[3][3].empty=false;
-        table[3][3].kingBlack=true;
-        table[0][3].empty=false;
-        table[0][5].empty=false;
-        table[1][4].empty=false;
-        table[0][3].deleted=true;
-        table[0][5].deleted=true;
-        table[1][4].deleted=true;
-
     }
 }
 

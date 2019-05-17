@@ -22,34 +22,34 @@ public class TestTest {
 
     @BeforeEach
     void setUp2(){
-        player = new PlayerModel(true,true,false,true,false);
+        player = new PlayerModel(true,true,false,true,false,2,0);
     }
     @Test
     public void preTest() {
-        assertFalse(PreTest(5,5,current, player));
-        assertFalse(PreTest(5,4,current, player));
-        assertFalse(PreTest(1,2,current, player));
-        assertTrue(PreTest(1,0,current, player));
-        assertTrue(PreTest(1,1,current,player));
-        assertTrue(PreTest(2,1,current,player));
-        assertTrue(PreTest(3,1,current,player));
-        assertTrue(PreTest(3,0,current,player));
+        assertFalse(preCheck(5,5,current, player));
+        assertFalse(preCheck(5,4,current, player));
+        assertFalse(preCheck(1,2,current, player));
+        assertTrue(preCheck(1,0,current, player));
+        assertTrue(preCheck(1,1,current,player));
+        assertTrue(preCheck(2,1,current,player));
+        assertTrue(preCheck(3,1,current,player));
+        assertTrue(preCheck(3,0,current,player));
     }
     @Test
     public void deleteTest() {
-        assertFalse(DeleteTest(2,0,current));
-        assertFalse(DeleteTest(3,7,current));
-        assertTrue(DeleteTest(1,1,current));
-        assertTrue(DeleteTest(5,7,current));
-        assertTrue(DeleteTest(3,4,current));
+        assertFalse(deleteCheck(2,0,current));
+        assertFalse(deleteCheck(3,7,current));
+        assertTrue(deleteCheck(1,1,current));
+        assertTrue(deleteCheck(5,7,current));
+        assertTrue(deleteCheck(3,4,current));
     }
     @Test
     public void alphabetTest() {
-        assertTrue(AlphabetTest("almafa"));
-        assertTrue(AlphabetTest("44banán"));
-        assertTrue(AlphabetTest("nemleszjo"));
-        assertTrue(AlphabetTest("alma"));
-        assertTrue(AlphabetTest("34póni"));
-        assertFalse(AlphabetTest("1"));
+        assertTrue(alphabetCheck("almafa"));
+        assertTrue(alphabetCheck("44banán"));
+        assertTrue(alphabetCheck("nemleszjo"));
+        assertTrue(alphabetCheck("alma"));
+        assertTrue(alphabetCheck("34póni"));
+        assertFalse(alphabetCheck("1"));
     }
 }

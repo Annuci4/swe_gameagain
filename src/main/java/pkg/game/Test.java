@@ -17,7 +17,7 @@ public class Test {
      * @param player which player wants to take the move
      * @return {@code valid} true, if the test accept the coordinates
      */
-    public static boolean PreTest(int x, int y, Table current, PlayerModel player){
+    public static boolean preCheck(int x, int y, Table current, PlayerModel player){
        boolean valid = false;
        int where1=10,where2=10;
 
@@ -53,7 +53,7 @@ public class Test {
      * @param current tested board
      * @return {@code valid} true, if the player can delete the field (The field is empty and not deleted yet.)
      */
-    public static boolean DeleteTest(int x, int y, Table current){
+    public static boolean deleteCheck(int x, int y, Table current){
         boolean valid = false;
         if(current.table[x][y].empty && !current.table[x][y].deleted){
             valid = true;
@@ -65,7 +65,7 @@ public class Test {
      * @param helper the given coordinate point, what we check.
      * @return {@code true}, if the coordinate is not a number.
      */
-    public static boolean AlphabetTest(String helper){
+    public static boolean alphabetCheck(String helper){
         boolean fool=false;
         for (int i = 0; i < helper.length(); i++) {
             if(Character.isAlphabetic(helper.charAt(i))||!Character.isDigit(helper.charAt(i))){
@@ -81,12 +81,14 @@ public class Test {
      * @param col the second coordinate of the king who has the turn
      * @return {@code true} if someone won
      */
-    public static boolean WinTest(int row, int col, Table current){
+    public static boolean winCheck(int row, int col, Table current){
+
         boolean win=false;
         int db = 0;
+
         if(row>0 && row<5 && col>0 && col<7) {
-            for (int i = row - 1; i < row + 1; i++) {
-                for (int j = col - 1; j < col + 1; j++) {
+            for (int i = row - 1; i <= row + 1; i++) {
+                for (int j = col - 1; j <= col + 1; j++) {
                     if (current.table[i][j].empty)
                         db++;
                 }
@@ -94,15 +96,15 @@ public class Test {
         }
         else if(row==0 && col>0 && col<7){
             for (int i = row; i <=row + 1; i++) {
-                for (int j = col - 1; j <= col + 1; j++) {
+                for (int j = col - 1; j <=col + 1; j++) {
                     if (current.table[i][j].empty)
                         db++;
                 }
             }
         }
         else if (row==7 && col>0 && col<7){
-            for (int i = row-1; i <= row; i++) {
-                for (int j = col - 1; j <= col + 1; j++) {
+            for (int i = row-1; i <=row; i++) {
+                for (int j = col - 1; j <=col + 1; j++) {
                     if (current.table[i][j].empty)
                         db++;
                 }
@@ -144,7 +146,6 @@ public class Test {
             if(current.table[row-1][col].empty){db++;}
             if(current.table[row][col-1].empty){db++;}
         }
-System.out.println(db);
        if (db==0)
            win=true;
        return win;
