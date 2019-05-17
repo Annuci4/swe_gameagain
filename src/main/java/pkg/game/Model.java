@@ -9,11 +9,11 @@ public class Model {
      * @return returns the updated {@code current} board after the change
      */
     public static Table positionChange(PlayerModel player, Table current, int whereX, int whereY){
-        int row=10,col=10;
+        int row=14,col=14;
         if(player.whiteKing){
 
-            for (int i = 0; i < 6; i++) {
-                for (int j=0;j<8;j++)
+            for (int i = 1; i < 7; i++) {
+                for (int j=1;j<9;j++)
                     if(current.table[i][j].kingWhite) {
                        row=i;
                        col=j;
@@ -26,8 +26,8 @@ public class Model {
 
         }else if (player.blackKing){
 
-            for (int i = 0; i < 6; i++) {
-                for (int j=0;j<8;j++)
+            for (int i = 1; i < 7; i++) {
+                for (int j=1;j<9;j++)
                     if(current.table[i][j].kingBlack) {
                         row=i;
                         col=j;

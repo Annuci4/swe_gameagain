@@ -11,20 +11,23 @@ import pkg.results.GameResultDao;
 import util.guice.PersistenceModule;
 
 /**
- * GameLogic.
+ * The main part of the game.
  */
 public class GameController {
 
     private static Logger logger = LoggerFactory.getLogger(GameController.class);
 
-    public PlayerModel player1 = new PlayerModel(true, true, false, true, false, 2,0);
-    public PlayerModel player2 = new PlayerModel(false, false, false, false, true,3,7);
+    public PlayerModel player1 = new PlayerModel(true, true, false, true, false, 3,1);
+    public PlayerModel player2 = new PlayerModel(false, false, false, false, true,4,8);
 
     Table table = new Table();
     String helper;
-    
+
+    /**
+     * After the created table and players, the game getting start.
+     */
     public void startGame() {
-        Injector injector = Guice.createInjector(new PersistenceModule("result"));
+        Injector injector = Guice.createInjector(new PersistenceModule("game"));
         GameResultDao creator = injector.getInstance(GameResultDao.class);
         Scanner scan = new Scanner(System.in);
         player1.whiteKing = true;
@@ -62,10 +65,10 @@ public class GameController {
                     if (!Test.alphabetCheck(helper)) {
                         row = Integer.parseInt(helper);
                         if(player1.turn)
-                            player1.second=row;
+                            player1.first=row;
                         else
-                            player2.second=row;
-                        if (row < 0 || row > 5) {
+                            player2.first=row;
+                        if (row < 1 || row > 6) {
                             System.out.println("A-a...Ez nem lesz jó!\"");
                             logger.error("Invalid number");
                         } else {
@@ -78,14 +81,14 @@ public class GameController {
                     helper = scan.next();
                     if (Test.alphabetCheck(helper)){
                         System.out.println("A-a...Ez nem lesz jó!\"");
-                    logger.error("Invalid character");}
+                        logger.error("Invalid character");}
                     if (!Test.alphabetCheck(helper)) {
                         col = Integer.parseInt(helper);
                         if(player1.turn)
                             player1.second=col;
                         else
                             player2.second=col;
-                        if (col < 0 || col > 7) {
+                        if (col < 1 || col > 8) {
                             System.out.println("A-a...Ez nem lesz jó!\"");
                             logger.error("Invalid number");
                         } else {
@@ -132,7 +135,7 @@ public class GameController {
                      logger.error("Invalid character.");}
                     if (!Test.alphabetCheck(helper)) {
                         del_x = Integer.parseInt(helper);
-                        if (del_x < 0 || del_x > 7) {
+                        if (del_x < 1 || del_x > 8) {
                             System.out.println("A-a...Ez nem lesz jó!\"");
                              logger.error("Invalid number.");
                         } else {
@@ -148,7 +151,7 @@ public class GameController {
                         logger.error("Invalid character.");}
                     if (!Test.alphabetCheck(helper)) {
                         del_y = Integer.parseInt(helper);
-                        if (del_y < 0 || del_y > 7) {
+                        if (del_y < 1 || del_y > 8) {
                             System.out.println("A-a...Ez nem lesz jó!\"");
                             logger.error("Invalid number.");
                         } else {
@@ -194,20 +197,22 @@ public class GameController {
                     System.out.println("Gratulálok " + player1_name + "!");
                     logger.info("Player2 won!");
             }
-
             }
-
                 GameResult gs;
-               gs = createGameResult();
-               creator.persist(gs);
+                gs = createGameResult();
+                creator.persist(gs);
 
-            for (GameResult gr : creator.findBest(5)) {
-         System.out.println(gr.getName()+" " + "\t"+ gr.getCreated());
-            }
-
+               for (GameResult gr : creator.findBest(5)) {
+                    System.out.println(gr.getName()+" " + "\t"+ gr.getCreated());
+                }
         }
 
+    /**
+     * Create results about the game, with players name and with their results(win or not).
+     * @return results of the current game
+     */
     private GameResult createGameResult(){
+        logger.info("Saving to database.");
         return GameResult.builder()
                 .name(player1.name)
                 .name2(player2.name)

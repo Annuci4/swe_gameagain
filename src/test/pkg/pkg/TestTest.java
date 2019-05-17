@@ -11,11 +11,18 @@ import static pkg.game.Test.*;
 public class TestTest {
 
     private Table current;
+    private Table current2;
 
     @BeforeEach
     void setUp(){
         current=new Table();
         current.createTable();
+    }
+    @BeforeEach
+    void setUp3(){
+        current2=new Table();
+        current2.createTable2();
+
     }
 
     private PlayerModel player;
@@ -24,6 +31,7 @@ public class TestTest {
     void setUp2(){
         player = new PlayerModel(true,true,false,true,false,2,0);
     }
+
     @Test
     public void preTest() {
         assertFalse(preCheck(5,5,current, player));
@@ -51,5 +59,13 @@ public class TestTest {
         assertTrue(alphabetCheck("alma"));
         assertTrue(alphabetCheck("34póni"));
         assertFalse(alphabetCheck("1"));
+    }
+    @Test
+    public void winTest(){
+        assertTrue(winCheck(3,3,current2));
+        assertFalse(winCheck(2,4,current2));
+        assertFalse(winCheck(0,0,current2));
+        assertFalse(winCheck(3,7,current2));
+        assertFalse(winCheck(2,4,current2));
     }
 }

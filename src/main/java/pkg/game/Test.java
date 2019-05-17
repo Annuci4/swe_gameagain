@@ -22,8 +22,8 @@ public class Test {
        int where1=10,where2=10;
 
         if (player.whiteKing) {
-            for (int i = 0; i < 6; i++) {
-                for (int j = 0; j < 8; j++) {
+            for (int i = 1; i < 7; i++) {
+                for (int j = 1; j < 9; j++) {
                     if (current.table[i][j].kingWhite) {
                         where1 = i;
                         where2 = j;
@@ -31,8 +31,8 @@ public class Test {
                 }
             }
         }else if(player.blackKing){
-            for (int i = 0; i < 6; i++) {
-                for (int j = 0; j < 8; j++) {
+            for (int i = 1; i < 7; i++) {
+                for (int j = 1; j < 9; j++) {
                     if (current.table[i][j].kingBlack) {
                         where1 = i;
                         where2 = j;
@@ -68,8 +68,11 @@ public class Test {
     public static boolean alphabetCheck(String helper){
         boolean fool=false;
         for (int i = 0; i < helper.length(); i++) {
-            if(Character.isAlphabetic(helper.charAt(i))||!Character.isDigit(helper.charAt(i))){
+            if(Character.isAlphabetic(helper.charAt(i))||!Character.isDigit(helper.charAt(i))) {
                 fool = true;
+            }else{
+                    if(helper.length()>2)
+                        fool=true;
             }
         }
         return fool;
@@ -85,66 +88,13 @@ public class Test {
 
         boolean win=false;
         int db = 0;
-
-        if(row>0 && row<5 && col>0 && col<7) {
-            for (int i = row - 1; i <= row + 1; i++) {
+        if(row>0 && row<7 && col>0 && col<9) {
+            for (int i = row - 1; i <=row + 1; i++) {
                 for (int j = col - 1; j <= col + 1; j++) {
                     if (current.table[i][j].empty)
                         db++;
                 }
             }
-        }
-        else if(row==0 && col>0 && col<7){
-            for (int i = row; i <=row + 1; i++) {
-                for (int j = col - 1; j <=col + 1; j++) {
-                    if (current.table[i][j].empty)
-                        db++;
-                }
-            }
-        }
-        else if (row==7 && col>0 && col<7){
-            for (int i = row-1; i <=row; i++) {
-                for (int j = col - 1; j <=col + 1; j++) {
-                    if (current.table[i][j].empty)
-                        db++;
-                }
-            }
-        }
-        else if (col==0 && row>0 && row<5){
-            for (int i = row-1; i <= row + 1; i++) {
-                for (int j = col; j <= col + 1; j++) {
-                    if (current.table[i][j].empty)
-                        db++;
-                }
-            }
-        }
-        else if (col==7 && row>0 && row<5){
-            for (int i = row-1; i <= row + 1; i++) {
-                for (int j = col-1; j <= col; j++) {
-                    if (current.table[i][j].empty)
-                        db++;
-                }
-            }
-        }
-        else if(col==0 && row==0){
-            if(current.table[1][1].empty){db++;}
-            if(current.table[1][0].empty){db++;}
-            if(current.table[0][1].empty){db++;}
-        }
-        else if(col==0 && row==5){
-            if(current.table[row-1][col+1].empty){db++;}
-            if(current.table[row-1][col].empty){db++;}
-            if(current.table[row][col+1].empty){db++;}
-        }
-        else if(col==7 && row==0){
-            if(current.table[row+1][col-1].empty){db++;}
-            if(current.table[row+1][col].empty){db++;}
-            if(current.table[row][col-1].empty){db++;}
-        }
-        else if(col==7 && row==5){
-            if(current.table[row-1][col-1].empty){db++;}
-            if(current.table[row-1][col].empty){db++;}
-            if(current.table[row][col-1].empty){db++;}
         }
        if (db==0)
            win=true;
