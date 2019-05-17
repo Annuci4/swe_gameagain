@@ -18,7 +18,7 @@ public class GameResult {
 
     @Id
     @GeneratedValue
-    private String id;
+    private Long id;
 
     /**
      * Name of player1.
@@ -32,10 +32,6 @@ public class GameResult {
     @Column(nullable = false)
     private String name2;
 
-     /**
-     * Number of how many times won the player.
-     */
-   // private int numberOfwons1, numberOfwons2;
     /**
      * The timestamp when the game was ended.
      */

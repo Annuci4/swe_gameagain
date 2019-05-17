@@ -28,5 +28,20 @@ public class PlayerModel {
         this.first=b4;
         this.second=b5;
     }
+    String getName() {
+        return name;
+    }
+
+    void setName(String name) {
+        this.name = name;
+    }
+
+    boolean isWin() {
+        return win;
+    }
+
+    void setWin(boolean win) {
+        this.win = win;
+    }
 
 }

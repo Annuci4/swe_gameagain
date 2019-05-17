@@ -1,6 +1,5 @@
 package pkg.game;
 
-
 public class Table {
 
     public State[][] table = new State[8][10];
